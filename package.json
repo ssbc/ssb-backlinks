@@ -1,0 +1,24 @@
+{
+  "name": "ssb-backlinks",
+  "description": "scuttlebot plugin for indexing all link mentions of messages",
+  "version": "0.0.0",
+  "homepage": "https://github.com/ssbc/ssb-backlinks",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ssbc/ssb-backlinks.git"
+  },
+  "dependencies": {
+    "deep-equal": "^1.0.1",
+    "flumeview-level": "^2.0.2",
+    "flumeview-query": "^3.0.3",
+    "map-filter-reduce": "^3.0.3",
+    "pull-flatmap": "0.0.1",
+    "pull-stream": "^3.6.0",
+    "ssb-ref": "^2.7.1",
+    "xtend": "^4.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {},
+  "author": "Secure Scuttlebutt Consortium",
+  "license": "MIT"
+}
