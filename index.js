@@ -6,10 +6,11 @@ var matchChannel = /^#[^\s#]+$/
 
 var indexes = [
   { key: 'DTS', value: [['dest'], ['timestamp']] },
+  { key: 'DTA', value: [['dest'], ['value', 'timestamp']] }, // asserted timestamp
   { key: 'TDT', value: [['value', 'content', 'type'], ['dest'], ['value', 'timestamp']] }
 ]
 
-var indexVersion = 0
+var indexVersion = 2
 
 exports.name = 'backlinks'
 exports.version = require('./package.json').version
