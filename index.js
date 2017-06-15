@@ -6,7 +6,7 @@ var matchChannel = /^#[^\s#]+$/
 
 var indexes = [
   { key: 'DTS', value: [['dest'], ['timestamp']] },
-  { key: 'DTY', value: [['dest'], ['value', 'content', 'type'], ['timestamp']] }
+  { key: 'TDT', value: [['value', 'content', 'type'], ['dest'], ['value', 'timestamp']] }
 ]
 
 var indexVersion = 0
