@@ -3,6 +3,8 @@ var ref = require('ssb-ref')
 var deepEqual = require('deep-equal')
 var extend = require('xtend')
 var matchChannel = /^#[^\s#]+$/
+var ssbKeys = require('ssb-keys')
+var toUrlFriendly = require('base64-url').escape
 
 var indexes = [
   { key: 'DTS', value: [['dest'], ['timestamp']] },
@@ -10,7 +12,7 @@ var indexes = [
   { key: 'TDT', value: [['value', 'content', 'type'], ['dest'], ['value', 'timestamp']] }
 ]
 
-var indexVersion = 2
+var indexVersion = 3
 
 exports.name = 'backlinks'
 exports.version = require('./package.json').version
@@ -20,9 +22,38 @@ exports.manifest = {
 
 exports.init = function (ssb, config) {
   return ssb._flumeUse(
-    'backlinks',
-    FlumeQueryLinks(indexes, extractLinks, indexVersion)
+    `backlinks-${toUrlFriendly(ssb.id.slice(1, 10))}`,
+    FlumeQueryLinks(indexes, extractLinks, indexVersion, unbox)
   )
+
+  function unbox (msg) {
+    if (typeof msg.value.content === 'string') {
+      var value = unboxValue(msg.value)
+      if (value) {
+        return {
+          key: msg.key, value: value, timestamp: msg.timestamp
+        }
+      }
+    }
+    return msg
+  }
+
+  function unboxValue (value) {
+    var plaintext = null
+    try {
+      plaintext = ssbKeys.unbox(value.content, ssb.keys.private)
+    } catch (ex) {}
+    if (!plaintext) return null
+    return {
+      previous: value.previous,
+      author: value.author,
+      sequence: value.sequence,
+      timestamp: value.timestamp,
+      hash: value.hash,
+      content: plaintext,
+      private: true
+    }
+  }
 }
 
 function extractLinks (msg, emit) {
