@@ -10,12 +10,14 @@ function emitLinks (msg, emit) {
   walk(msg.value.content, function (path, value) {
     // HACK: handle legacy channel mentions
     if (deepEqual(path, ['channel']) && typeof value === 'string' && value.length < 30) {
-      value = `#${value.replace(/\s/g, '')}`
+      value = `#${ref.normalizeChannel(value)}`
     }
 
     // TODO: should add channel matching to ref.type
-    if (ref.type(value) || isChannel(value)) {
+    if (ref.type(value)) {
       links.add(value)
+    } else if (isChannel(value)) {
+      links.add(ref.normalizeChannel(value))
     }
   })
   links.forEach(link => {
