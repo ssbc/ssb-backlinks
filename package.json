@@ -10,7 +10,7 @@
   "dependencies": {
     "base64-url": "^1.3.3",
     "deep-equal": "^1.0.1",
-    "flumeview-level": "^2.0.3",
+    "flumeview-level": "^2.1.1",
     "flumeview-query": "^3.0.3",
     "map-filter-reduce": "^3.0.3",
     "pull-flatmap": "0.0.1",
