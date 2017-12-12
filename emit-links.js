@@ -9,15 +9,18 @@ function emitLinks (msg, emit) {
   var links = new Set()
   walk(msg.value.content, function (path, value) {
     // HACK: handle legacy channel mentions
-    if (deepEqual(path, ['channel']) && typeof value === 'string' && value.length < 30) {
-      value = `#${ref.normalizeChannel(value)}`
+    if (deepEqual(path, ['channel'])) {
+      var channel = ref.normalizeChannel(value)
+      if (channel) {
+        value = `#${channel}`
+      }
     }
 
     // TODO: should add channel matching to ref.type
     if (ref.type(value)) {
       links.add(value)
     } else if (isChannel(value)) {
-      links.add(ref.normalizeChannel(value))
+      links.add(`#${ref.normalizeChannel(value.slice(1))}`)
     }
   })
   links.forEach(link => {
