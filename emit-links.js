@@ -22,6 +22,7 @@ function emitLinks (msg, emit) {
   })
   links.forEach(link => {
     emit(extend(msg, {
+      rts: resolveTimestamp(msg),
       dest: link
     }))
   })
@@ -29,6 +30,15 @@ function emitLinks (msg, emit) {
 
 function isChannel (value) {
   return typeof value === 'string' && value.length < 30 && matchChannel.test(value)
+}
+
+function resolveTimestamp (msg) {
+  if (!msg || !msg.value || !msg.value.timestamp) return
+  if (msg.timestamp) {
+    return Math.min(msg.timestamp, msg.value.timestamp)
+  } else {
+    return msg.value.timestamp
+  }
 }
 
 function walk (obj, fn, prefix) {

@@ -5,11 +5,11 @@ var emitLinks = require('./emit-links')
 
 var indexes = [
   { key: 'DTS', value: [['dest'], ['timestamp']] },
-  { key: 'DTA', value: [['dest'], ['value', 'timestamp']] }, // asserted timestamp
-  { key: 'TDT', value: [['value', 'content', 'type'], ['dest'], ['value', 'timestamp']] }
+  { key: 'DTA', value: [['dest'], ['rts']] }, // asserted timestamp
+  { key: 'TDT', value: [['value', 'content', 'type'], ['dest'], ['rts']] }
 ]
 
-var indexVersion = 5
+var indexVersion = 6
 
 exports.name = 'backlinks'
 exports.version = require('./package.json').version
