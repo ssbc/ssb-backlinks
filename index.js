@@ -25,7 +25,7 @@ exports.init = function (ssb, config) {
 
   return {
     read: function (opts) {
-      opts.includeOriginalMessageValue = true
+      opts.unlinkedValues = true
       return index.read(opts)
     }
   }
