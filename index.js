@@ -1,4 +1,4 @@
-var FlumeQueryLinks = require('./lib/flumeview-links-raw')
+var FlumeQueryLinks = require('flumeview-query/links')
 var ssbKeys = require('ssb-keys')
 var toUrlFriendly = require('base64-url').escape
 var emitLinks = require('./emit-links')
@@ -18,37 +18,15 @@ exports.manifest = {
 }
 
 exports.init = function (ssb, config) {
-  return ssb._flumeUse(
+  var index = ssb._flumeUse(
     `backlinks-${toUrlFriendly(ssb.id.slice(1, 10))}`,
-    FlumeQueryLinks(indexes, emitLinks, indexVersion, unbox)
+    FlumeQueryLinks(indexes, emitLinks, indexVersion)
   )
 
-  function unbox (msg) {
-    if (typeof msg.value.content === 'string') {
-      var value = unboxValue(msg.value)
-      if (value) {
-        return {
-          key: msg.key, value: value, timestamp: msg.timestamp
-        }
-      }
-    }
-    return msg
-  }
-
-  function unboxValue (value) {
-    var plaintext = null
-    try {
-      plaintext = ssbKeys.unbox(value.content, ssb.keys.private)
-    } catch (ex) {}
-    if (!plaintext) return null
-    return {
-      previous: value.previous,
-      author: value.author,
-      sequence: value.sequence,
-      timestamp: value.timestamp,
-      hash: value.hash,
-      content: plaintext,
-      private: true
+  return {
+    read: function (opts) {
+      opts.unlinkedValues = true
+      return index.read(opts)
     }
   }
 }
