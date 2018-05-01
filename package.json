@@ -1,7 +1,7 @@
 {
   "name": "ssb-backlinks",
   "description": "scuttlebot plugin for indexing all link mentions of messages",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "homepage": "https://github.com/ssbc/ssb-backlinks",
   "repository": {
     "type": "git",
