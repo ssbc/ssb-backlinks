@@ -37,7 +37,7 @@ pull(
 
 ## Versions
 
-Please note that 0.6.2 requires scuttlebot 11.3
+Please note that 0.7.0 requires scuttlebot 11.3
 
 ## License
 
