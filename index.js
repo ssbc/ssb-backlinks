@@ -26,7 +26,27 @@ exports.init = function (ssb, config) {
   return {
     read: function (opts) {
       opts.unlinkedValues = true
+      if (opts.index) {
+        // backwards compatibility for opts.index sorting
+        var sort = selectValueByKey(indexes, opts.index)
+        if (sort) {
+          opts.query = opts.query ? [].concat(opts.query) : []
+          opts.query.push({
+            $sort: sort
+          })
+        } else {
+          throw new Error('Invalid index: ' + opts.index)
+        }
+      }
       return index.read(opts)
+    }
+  }
+}
+
+function selectValueByKey (indexes, key) {
+  for (var i = 0; i < indexes.length; i++) {
+    if (indexes[i].key === key) {
+      return indexes[i].value
     }
   }
 }

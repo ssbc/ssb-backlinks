@@ -10,7 +10,7 @@
   "dependencies": {
     "base64-url": "^1.3.3",
     "deep-equal": "^1.0.1",
-    "flumeview-query": "^6.1.0",
+    "flumeview-query": "^6.2.0",
     "pull-stream": "^3.6.7",
     "ssb-keys": "^7.0.14",
     "ssb-ref": "^2.9.0",
