@@ -1,6 +1,4 @@
 var ref = require('ssb-ref')
-var deepEqual = require('deep-equal')
-var extend = require('xtend')
 var matchChannel = /^#[^\s#]+$/
 
 module.exports = emitLinks
@@ -9,7 +7,7 @@ function emitLinks (msg, emit) {
   var links = new Set()
   walk(msg.value.content, function (path, value) {
     // HACK: handle legacy channel mentions
-    if (deepEqual(path, ['channel'])) {
+    if (Array.isArray(path) && path[0] === 'channel') {
       var channel = ref.normalizeChannel(value)
       if (channel) {
         value = `#${channel}`
@@ -24,7 +22,7 @@ function emitLinks (msg, emit) {
     }
   })
   links.forEach(link => {
-    emit(extend(msg, {
+    emit(Object.assign(msg, {
       rts: resolveTimestamp(msg),
       dest: link
     }))
