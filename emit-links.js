@@ -22,7 +22,7 @@ function emitLinks (msg, emit) {
     }
   })
   links.forEach(link => {
-    emit(Object.assign(msg, {
+    emit(Object.assign({}, msg, {
       rts: resolveTimestamp(msg),
       dest: link
     }))

@@ -53,7 +53,7 @@ test('emitLinks should call emit fn with added rts and dest fields', (t) => {
   const msg = { value: { content: { contact: 'contact-id' }, timestamp: 1 } }
   ref.type.returns(true)
   emitLinks(msg, emit)
-  t.true(emit.calledWith(Object.assign(msg, {
+  t.true(emit.calledWith(Object.assign({}, msg, {
     rts: 1,
     dest: 'contact-id'
   })))
