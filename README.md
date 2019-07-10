@@ -54,7 +54,7 @@ var create = SecretStack({
 .use(require('ssb-backlinks'))
 .use(function (sbot, config) {
   pull(
-    sbot.backlink.read({
+    sbot.backlinks.read({
       query: [{$filter: {dest: "%dfadf..."}}], // some message hash
       index: 'DTA',
       live: true
