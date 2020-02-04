@@ -5,7 +5,7 @@ module.exports = emitLinks
 
 // we don't need invite and address types, so don't use ref.type as those are quite slow
 function type(id) {
-  if(typeof(id) !== 'string') return ""
+  if(typeof(id) !== 'string') return ''
   var c = id.charAt(0)
   if (c == '@' && ref.isFeedId(id))
     return 'feed'
@@ -16,7 +16,7 @@ function type(id) {
   else if (c == '#' && isChannel(id))
     return 'channel'
   else
-    return ""
+    return ''
 }
 
 function emitLinks (msg, emit) {
