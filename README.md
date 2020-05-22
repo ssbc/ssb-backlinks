@@ -2,7 +2,7 @@
 
 [scuttlebot](http://scuttlebutt.nz/) plugin for indexing all link mentions of messages (including private for the current identity).
 
-Walks all values of a message searching for [ssb-ref](https://github.com/ssbc/ssb-ref) recognized keys. Provides an [ssb-query](https://github.com/dominictarr/ssb-query) style interface.
+Walks all values of a message searching for keys recognized as feed, channel, message or blobs. Provides an [ssb-query](https://github.com/dominictarr/ssb-query) style interface.
 
 ## Example usage
 
@@ -33,6 +33,37 @@ pull(
     relatedMessages.push(msg)
   })
 )
+```
+
+## Example usage as a Secret-Stack Plugin
+`ssb-backlinks` can also be used as a `secret-stack`
+[plugin](https://github.com/ssbc/secret-stack/blob/master/plugins.md) directly.
+
+```js
+var SecretStack = require('secret-stack')
+var config = require('./some-config-file')
+
+var {pull, drain} = require('pull-stream')
+
+// you'd need many more plugins to make this useful
+// demo purposes only
+var create = SecretStack({
+  appKey: appKey //32 random bytes
+})
+.use(require('ssb-db'))
+.use(require('ssb-backlinks'))
+.use(function (sbot, config) {
+  pull(
+    sbot.backlinks.read({
+      query: [{$filter: {dest: "%dfadf..."}}], // some message hash
+      index: 'DTA',
+      live: true
+    }),
+    drain(console.log)
+  )
+)}
+
+var server = create(config) // start application
 ```
 
 ## Versions
