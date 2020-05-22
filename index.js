@@ -1,5 +1,4 @@
-var FlumeQueryLinks = require('flumeview-query/links')
-var ssbKeys = require('ssb-keys')
+var FlumeLinks = require('flumeview-links')
 var toUrlFriendly = require('base64-url').escape
 var emitLinks = require('./emit-links')
 
@@ -20,7 +19,7 @@ exports.manifest = {
 exports.init = function (ssb, config) {
   var index = ssb._flumeUse(
     `backlinks-${toUrlFriendly(ssb.id.slice(1, 10))}`,
-    FlumeQueryLinks(indexes, emitLinks, indexVersion)
+    FlumeLinks(indexes, emitLinks, indexVersion)
   )
 
   return {
@@ -39,7 +38,8 @@ exports.init = function (ssb, config) {
         }
       }
       return index.read(opts)
-    }
+    },
+    close: index.close
   }
 }
 
