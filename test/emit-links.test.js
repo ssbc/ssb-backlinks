@@ -24,8 +24,26 @@ test('emitLinks does not call emit fn if there are no links', (t) => {
   t.true(emit.notCalled)
 })
 
-test('emitLinks calls emit fn if links are found in content', (t) => {
+test('emitLinks calls emit fn if links (feedId) are found in content', (t) => {
   const msg = { value: { content: { contact: '@6CAxOI3f+LUOVrbAl0IemqiS7ATpQvr9Mdw9LC4+Uv0=.ed25519' } } }
+  emitLinks(msg, emit)
+  t.true(emit.calledOnce)
+})
+
+test('emitLinks calls emit fn if links are found in content (array)', (t) => {
+  const msg = { value: { content: { contacts: ['@6CAxOI3f+LUOVrbAl0IemqiS7ATpQvr9Mdw9LC4+Uv0=.ed25519'] } } }
+  emitLinks(msg, emit)
+  t.true(emit.calledOnce)
+})
+
+test('emitLinks calls emit fn if links (msgId) are found in content', (t) => {
+  const msg = { value: { content: { contact: '%6CAxOI3f+LUOVrbAl0IemqiS7ATpQvr9Mdw9LC4+Uv0=.sha256' } } }
+  emitLinks(msg, emit)
+  t.true(emit.calledOnce)
+})
+
+test('emitLinks calls emit fn if links (cloakedMsgId) are found in content', (t) => {
+  const msg = { value: { content: { contact: '%6CAxOI3f+LUOVrbAl0IemqiS7ATpQvr9Mdw9LC4+Uv0=.cloaked' } } }
   emitLinks(msg, emit)
   t.true(emit.calledOnce)
 })
