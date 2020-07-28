@@ -8,7 +8,7 @@ var indexes = [
   { key: 'TDT', value: [['value', 'content', 'type'], ['dest'], ['rts']] }
 ]
 
-var indexVersion = 10 
+var indexVersion = 11
 
 exports.name = 'backlinks'
 exports.version = require('./package.json').version
